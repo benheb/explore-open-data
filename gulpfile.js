@@ -6,6 +6,15 @@ var gulp = require('gulp');
 // load plugins
 var $ = require('gulp-load-plugins')();
 
+var deploy = require("gulp-gh-pages");
+var options = {
+  branch: "gh-pages"
+}
+gulp.task('deploy', function () {
+    gulp.src("./dist/**/*")
+        .pipe(deploy(options));
+});
+
 gulp.task('styles', function () {
     return gulp.src('app/styles/main.scss')
         .pipe($.rubySass({
