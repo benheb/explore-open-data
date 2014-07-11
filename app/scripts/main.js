@@ -23,7 +23,13 @@ require(["esri/map", "dojo/request", "esri/geometry/Circle", "esri/symbols/Simpl
   function add(f){
 
     var point = {"geometry":{"x":f.geometry.x,"y":f.geometry.y,
-    "spatialReference":{wkid: 102100}}, "attributes": {"title": f.attributes.title, "datasets": f.attributes.datasets_count}, "symbol":{"color":[237,108,33,128],
+    "spatialReference":{wkid: 102100}}, "attributes": {
+        "title": f.attributes.title, 
+        "datasets": f.attributes.datasets_count,
+        "url": f.attributes.url,
+        "groups": f.attributes.groups_count
+      }, 
+      "symbol":{"color":[237,108,33,128],
     "size":Math.min( Math.round( f.attributes.datasets_count / 100 * 20 ), 50), "angle":0,"xoffset":0,"yoffset":0,"type":"esriSMS",
     "style":"esriSMSCircle","outline":{"color":[255,255,255,255],"width":1,
     "type":"esriSLS","style":"esriSLSSolid"}}};
@@ -33,8 +39,16 @@ require(["esri/map", "dojo/request", "esri/geometry/Circle", "esri/symbols/Simpl
   }
 
   gl.on('mouse-over', function(e) {
-    //_featureSelected( e.graphic, 'mouse-over' );
+    //featureSelected( e.graphic, 'mouse-over' );
     showHoverWindow(e);
+  });
+
+  gl.on('click', function(e) {
+    onGraphicClick(e);
+  });
+
+  gl.on('mouse-out', function(e) {
+    //removeSelectedFeature( 'mouse-over' );
   });
 
   request("explore.json").then(function(data){
@@ -71,8 +85,47 @@ require(["esri/map", "dojo/request", "esri/geometry/Circle", "esri/symbols/Simpl
   function showHoverWindow(e) {
     var datasets = e.graphic.attributes.datasets;
     var title = e.graphic.attributes.title;
+    var groups = e.graphic.attributes.groups;
     $('#title').html(title);
+    $('#groups').html('Open Data Groups: ' + groups);
     $('#count').html("Datasets: " + datasets);
+  }
+
+  function onGraphicClick(e) {
+    if ( e.graphic.attributes.url !== "" && e.graphic.attributes.url !== null ) {
+      window.open(e.graphic.attributes.url);
+    }
+  }
+
+  function featureSelected(graphicJson) {
+    var graphic = {};
+    graphic.geometry = graphicJson.geometry;
+    graphic.symbol = {};
+    graphic.attributes = { id: "selectedFeature" }
+
+
+    graphic.symbol = {
+      "color":[255,255,255,1],"size":graphicJson.symbol.size,"angle":0,"xoffset":0,"yoffset":0,"type":"esriSMS","style":"esriSMSCircle",
+      "outline":{"color":[255,255,255,255],"width":2,
+      "type":"esriSLS","style":"esriSLSSolid"}
+    };
+
+
+    var g = new esri.Graphic( graphic );
+    
+    //add to map
+    map.graphics.add( g );
+  }
+
+  function removeSelectedFeature() {
+    $.each(map.graphics.graphics, function(index,gra){
+    if (gra) {
+      console.log('ra!', gra);
+      if(gra.attributes && gra.attributes.id === "selectedFeature"){
+        map.graphics.remove( gra );
+      }
+    }
+  });
   }
    
 });

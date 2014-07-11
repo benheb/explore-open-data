@@ -15,10 +15,14 @@ body, html {
 
 #header {
   position: absolute;
-  z-index: 100;
+  z-index: 5;
   color: #FFF;
   padding-left: 80px;
   padding-top: 10px;
+}
+
+circle {
+  cursor:pointer;
 }
 
 #info {
@@ -31,10 +35,10 @@ body, html {
 }
 
 #title {
-  font-size:18pt;
+  font-size:20pt;
 }
 
-#count {
+#count, #groups {
   font-size:15pt;
 }
 
