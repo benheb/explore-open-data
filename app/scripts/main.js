@@ -23,14 +23,19 @@ require(["esri/map", "dojo/request", "esri/geometry/Circle", "esri/symbols/Simpl
   function add(f){
 
     var point = {"geometry":{"x":f.geometry.x,"y":f.geometry.y,
-    "spatialReference":{wkid: 102100}},"symbol":{"color":[237,108,33,128],
-    "size":Math.min( Math.round( f.attributes.datasets_count / 100 * 25 ), 50), "angle":0,"xoffset":0,"yoffset":0,"type":"esriSMS",
+    "spatialReference":{wkid: 102100}}, "attributes": {"title": f.attributes.title, "datasets": f.attributes.datasets_count}, "symbol":{"color":[237,108,33,128],
+    "size":Math.min( Math.round( f.attributes.datasets_count / 100 * 20 ), 50), "angle":0,"xoffset":0,"yoffset":0,"type":"esriSMS",
     "style":"esriSMSCircle","outline":{"color":[255,255,255,255],"width":1,
     "type":"esriSLS","style":"esriSLSSolid"}}};
     
     var gra = new Graphic(point);
     gl.add(gra);
   }
+
+  gl.on('mouse-over', function(e) {
+    //_featureSelected( e.graphic, 'mouse-over' );
+    showHoverWindow(e);
+  });
 
   request("explore.json").then(function(data){
     // do something with handled data
@@ -62,5 +67,12 @@ require(["esri/map", "dojo/request", "esri/geometry/Circle", "esri/symbols/Simpl
 
     });   
   });
+
+  function showHoverWindow(e) {
+    var datasets = e.graphic.attributes.datasets;
+    var title = e.graphic.attributes.title;
+    $('#title').html(title);
+    $('#count').html("Datasets: " + datasets);
+  }
    
 });
