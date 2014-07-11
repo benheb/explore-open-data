@@ -10,6 +10,15 @@ body, html {
   margin:0px;
   height:100%;
   background:#353535;
+  font-family: 'Open Sans', sans-serif;
+}
+
+#header {
+  position: absolute;
+  z-index: 100;
+  color: #FFF;
+  padding-left: 80px;
+  padding-top: 10px;
 }
 
 #map {

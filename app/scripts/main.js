@@ -6,7 +6,7 @@ require(["esri/map", "dojo/request", "esri/geometry/Circle", "esri/symbols/Simpl
 
   esriConfig.defaults.map.basemaps.dotted = {
     baseMapLayers: [
-      { url: "http://studio.esri.com/arcgis/rest/services/World/WorldBasemapWhite/MapServer" }
+      { url: "http://studio.esri.com/arcgis/rest/services/World/WorldBasemapBlack/MapServer" }
     ],
     title: "dots"
   };
@@ -17,20 +17,22 @@ require(["esri/map", "dojo/request", "esri/geometry/Circle", "esri/symbols/Simpl
     basemap: "dotted"
   });
   
-  var colors = [[244,255,171], [255,136,115], [237,108,33], [120,77,91]];
-  var symbol = new SimpleFillSymbol().setColor([255,0,0]).outline.setColor( "red" );
   var gl = new GraphicsLayer({ id: "circles" });
   map.addLayer(gl);
 
   function add(f){
-    console.log(Math.round( f.attributes.datasets_count / 100 * 40000 ));
+  //  console.log(Math.round( f.attributes.datasets_count / 100 * 40000 ));
 
-    var point = new Point([f.geometry.x, f.geometry.y], new SpatialReference({ wkid: 102100 }));
-    var circle = new Circle(point, {
-      radius: 2000000//Math.min( Math.round( f.attributes.datasets_count / 100 * 100000 ), 200000) //1000 * (f.attributes.datasets_count)
-    });
-    var graphic = new Graphic(circle, symbol);
-    gl.add(graphic);
+//      radius: 2000000//Math.min( Math.round( f.attributes.datasets_count / 100 * 100000 ), 200000) //1000 * (f.attributes.datasets_count)
+
+    var point = {"geometry":{"x":f.geometry.x,"y":f.geometry.y,
+    "spatialReference":{wkid: 102100}},"symbol":{"color":[237,108,33,128],
+    "size":Math.min( Math.round( f.attributes.datasets_count / 100 * 25 ), 50), "angle":0,"xoffset":0,"yoffset":0,"type":"esriSMS",
+    "style":"esriSMSCircle","outline":{"color":[0,0,0,255],"width":1,
+    "type":"esriSLS","style":"esriSLSSolid"}}};
+    
+    var gra = new Graphic(point);
+    gl.add(gra);
   }
 
   request("explore.json").then(function(data){
