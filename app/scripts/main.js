@@ -17,11 +17,11 @@ require(["esri/map", "dojo/request", "esri/geometry/Circle", "esri/symbols/Simpl
     basemap: "dotted"
   });
   
-  var symbol = new SimpleFillSymbol().setColor([255,0,0]).outline.setColor("blue");
+  var colors = [[244,255,171], [255,136,115], [237,108,33], [120,77,91]];
+  var symbol = new SimpleFillSymbol().setColor([255,0,0]).outline.setColor( "blue" );
   var gl = new GraphicsLayer({ id: "circles" });
   map.addLayer(gl);
 
-  var colors = ['#f4ffab', '#ff8873', '#ed6c21', '#784d5b']
   function add(f){
     var point = new Point([f.geometry.x, f.geometry.y], new SpatialReference({ wkid: 102100 }));
     var circle = new Circle(point, {
