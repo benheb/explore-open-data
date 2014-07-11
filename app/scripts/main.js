@@ -6,7 +6,7 @@ require(["esri/map", "dojo/request", "esri/geometry/Circle", "esri/symbols/Simpl
 
   esriConfig.defaults.map.basemaps.dotted = {
     baseMapLayers: [
-      { url: "http://studio.esri.com/arcgis/rest/services/World/WorldBasemapBlack/MapServer" }
+      { url: "http://studio.esri.com/arcgis/rest/services/World/WorldBasemapWhite/MapServer" }
     ],
     title: "dots"
   };
