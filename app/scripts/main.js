@@ -29,9 +29,9 @@ require(["esri/map", "dojo/request", "esri/geometry/Circle", "esri/symbols/Simpl
         "url": f.attributes.url,
         "groups": f.attributes.groups_count
       }, 
-      "symbol":{"color":[237,108,33,128],
-    "size":Math.min( Math.round( f.attributes.datasets_count / 100 * 20 ), 50), "angle":0,"xoffset":0,"yoffset":0,"type":"esriSMS",
-    "style":"esriSMSCircle","outline":{"color":[255,255,255,255],"width":1,
+      "symbol":{"color":[237,50,133,128],
+    "size":Math.min( Math.round( f.attributes.datasets_count / 100 * 40 ), 50), "angle":0,"xoffset":0,"yoffset":0,"type":"esriSMS",
+    "style":"esriSMSCircle","outline":{"color":[255,255,255,255],"width":0,
     "type":"esriSLS","style":"esriSLSSolid"}}};
     
     var gra = new Graphic(point);

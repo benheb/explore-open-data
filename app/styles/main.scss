@@ -18,7 +18,12 @@ body, html {
   z-index: 5;
   color: #FFF;
   padding-left: 80px;
-  padding-top: 10px;
+  padding-top: 0px;
+}
+  
+h1 {
+  text-transform: uppercase;
+  font-size:4vw;
 }
 
 circle {
@@ -36,10 +41,12 @@ circle {
 
 #title {
   font-size:20pt;
+  font-size:2vw;
 }
 
 #count, #groups {
   font-size:15pt;
+  font-size:1vw;
 }
 
 #map {
