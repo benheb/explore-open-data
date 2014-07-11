@@ -13,18 +13,21 @@ require(["esri/map", "dojo/request", "esri/geometry/Circle", "esri/symbols/Simpl
 
   map = new Map("map", {
     center: [-56.049, 38.485],
-    zoom: 3,
-    basemap: "dotted"
+    zoom: 3
+    //basemap: "dotted"
   });
   
-  var symbol = new SimpleFillSymbol().setColor([255,0,0]).outline.setColor("blue");
+  var symbol = new SimpleFillSymbol().setColor("yellow").outline.setColor("blue");
+  console.log(symbol)
   var gl = new GraphicsLayer({ id: "circles" });
   map.addLayer(gl);
 
   function add(f){
+    console.log(Math.round( f.attributes.datasets_count / 100 * 19000 ));
+
     var point = new Point([f.geometry.x, f.geometry.y], new SpatialReference({ wkid: 102100 }));
     var circle = new Circle(point, {
-      radius: 1000 * (f.attributes.datasets_count)
+      radius: Math.round( f.attributes.datasets_count / 450 * 40000 ) //1000 * (f.attributes.datasets_count)
     });
     var graphic = new Graphic(circle, symbol);
     gl.add(graphic);
