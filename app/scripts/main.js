@@ -25,7 +25,7 @@ require(["esri/map", "dojo/request", "esri/geometry/Circle", "esri/symbols/Simpl
     var point = {"geometry":{"x":f.geometry.x,"y":f.geometry.y,
     "spatialReference":{wkid: 102100}},"symbol":{"color":[237,108,33,128],
     "size":f.attributes.datasets_count / 15,"angle":0,"xoffset":0,"yoffset":0,"type":"esriSMS",
-    "style":"esriSMSCircle","outline":{"color":[0,0,0,255],"width":1,
+    "style":"esriSMSCircle","outline":{"color":[255,255,255,255],"width":1,
     "type":"esriSLS","style":"esriSLSSolid"}}};
     
     var gra = new Graphic(point);
