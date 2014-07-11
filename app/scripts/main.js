@@ -1,8 +1,8 @@
 //MAP! 
 var map;
 require(["esri/map", "dojo/request", "esri/geometry/Circle", "esri/symbols/SimpleFillSymbol", 
-  "esri/graphic", "esri/layers/GraphicsLayer", "esri/geometry/Point", "esri/layers/ArcGISTiledMapServiceLayer", 
-  "esri/layers/FeatureLayer", "dojo/domReady!"], function(Map, request, Circle, SimpleFillSymbol, Graphic, GraphicsLayer, Point) { 
+  "esri/graphic", "esri/layers/GraphicsLayer", "esri/geometry/Point", "esri/SpatialReference", "esri/layers/ArcGISTiledMapServiceLayer", 
+  "esri/layers/FeatureLayer", "dojo/domReady!"], function(Map, request, Circle, SimpleFillSymbol, Graphic, GraphicsLayer, Point, SpatialReference) { 
 
   esriConfig.defaults.map.basemaps.dotted = {
     baseMapLayers: [
@@ -17,15 +17,14 @@ require(["esri/map", "dojo/request", "esri/geometry/Circle", "esri/symbols/Simpl
     basemap: "dotted"
   });
   
-  var symbol = new SimpleFillSymbol().setColor(null).outline.setColor("blue");
+  var symbol = new SimpleFillSymbol().setColor([255,0,0]).outline.setColor("blue");
   var gl = new GraphicsLayer({ id: "circles" });
   map.addLayer(gl);
 
   function add(f){
-    console.log(f);
-    var point = new Point([-117.15,32.71]);
+    var point = new Point([f.geometry.x, f.geometry.y], new SpatialReference({ wkid: 102100 }));
     var circle = new Circle(point, {
-      radius: 100
+      radius: 1000 * (f.attributes.datasets_count)
     });
     var graphic = new Graphic(circle, symbol);
     gl.add(graphic);
@@ -38,8 +37,8 @@ require(["esri/map", "dojo/request", "esri/geometry/Circle", "esri/symbols/Simpl
     sites.forEach(function(site,i){
       feature = {
         geometry: {
-          x: site.default_extent.xmin + (site.default_extent.xmax - site.default_extent.xmin),
-          y: site.default_extent.ymin + (site.default_extent.ymax - site.default_extent.ymin),
+          x: site.default_extent.xmin + (site.default_extent.xmax - site.default_extent.xmin)/2,
+          y: site.default_extent.ymin + (site.default_extent.ymax - site.default_extent.ymin)/2,
           type: 'point',
           spatialReference: {
             latestWkid: 3857,
