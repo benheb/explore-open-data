@@ -51,7 +51,7 @@ require(["esri/map", "dojo/request", "esri/geometry/Circle", "esri/symbols/Simpl
     //removeSelectedFeature( 'mouse-over' );
   });
 
-  request("explore.json").then(function(data){
+  request("http://opendata.arcgis.com/explore.json").then(function(data){
     // do something with handled data
     var sites = JSON.parse(data).sites, feature;
 
