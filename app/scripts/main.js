@@ -16,7 +16,6 @@ require(["esri/map", "dojo/request", "esri/geometry/Circle", "esri/symbols/Simpl
     zoom: 3,
     basemap: "dotted"
   });
-  
   var gl = new GraphicsLayer({ id: "circles" });
   map.addLayer(gl);
 
