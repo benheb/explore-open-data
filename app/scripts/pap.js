@@ -150,7 +150,8 @@ require(["esri/map", "dojo/request", "esri/geometry/Circle", "esri/symbols/Simpl
     "gdl.wadshs.opendata.arcgis.com",
     "wyowildlife.wsfd.opendata.arcgis.com",
     "campuslab.tims.opendata.arcgis.com",
-    "geoportal.congeo.opendata.arcgis.com"
+    "geoportal.congeo.opendata.arcgis.com",
+    "meurio.pcrj.opendata.arcgis.com"
   ]
 
 
