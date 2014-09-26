@@ -13,6 +13,11 @@ body, html {
   font-family: 'Open Sans', sans-serif;
 }
 
+html.iframe, body.iframe {
+  background:#FFF;
+  height:100%;
+}
+
 #header {
   position: absolute;
   z-index: 5;
