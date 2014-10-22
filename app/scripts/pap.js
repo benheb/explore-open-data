@@ -1,8 +1,9 @@
 //MAP! 
 var map;
 require(["esri/map", "dojo/request", "esri/geometry/Circle", "esri/symbols/SimpleFillSymbol", 
-  "esri/graphic", "esri/layers/GraphicsLayer", "esri/geometry/Point", "esri/SpatialReference", "esri/layers/ArcGISTiledMapServiceLayer", 
-  "esri/layers/FeatureLayer", "dojo/domReady!"], function(Map, request, Circle, SimpleFillSymbol, Graphic, GraphicsLayer, Point, SpatialReference) { 
+  "esri/graphic", "esri/layers/GraphicsLayer", "esri/geometry/Point", "esri/SpatialReference", "esri/geometry/webMercatorUtils",
+  "esri/layers/ArcGISTiledMapServiceLayer", "esri/layers/FeatureLayer", "dojo/domReady!"], function(Map, request, Circle, SimpleFillSymbol, 
+    Graphic, GraphicsLayer, Point, SpatialReference, webMercatorUtils) { 
 
   esriConfig.defaults.map.basemaps.dotted = {
     baseMapLayers: [
@@ -151,7 +152,8 @@ require(["esri/map", "dojo/request", "esri/geometry/Circle", "esri/symbols/Simpl
     "wyowildlife.wsfd.opendata.arcgis.com",
     "campuslab.tims.opendata.arcgis.com",
     "geoportal.congeo.opendata.arcgis.com",
-    "meurio.pcrj.opendata.arcgis.com"
+    "meurio.pcrj.opendata.arcgis.com",
+    "geoinfo.idsgobiernolocal.opendata.arcgis.com"
   ]
 
 
@@ -163,16 +165,62 @@ require(["esri/map", "dojo/request", "esri/geometry/Circle", "esri/symbols/Simpl
       var url = site.url.replace(/http:\/\//, '');
       if ( pap.indexOf(url) === -1 ) return;
 
-      feature = {
-        geometry: {
-          x: site.default_extent.xmin + (site.default_extent.xmax - site.default_extent.xmin)/2,
-          y: site.default_extent.ymin + (site.default_extent.ymax - site.default_extent.ymin)/2,
-          type: 'point',
-          spatialReference: {
-            latestWkid: 3857,
-            wkid: 102100
+      //if (site.title == "Capsule Corp." || site.title == "FWC GIS & Mapping Data Downloads") {
+
+      var x = site.default_extent.xmin + (site.default_extent.xmax - site.default_extent.xmin)/2;
+      var y = site.default_extent.ymin + (site.default_extent.ymax - site.default_extent.ymin)/2;
+      
+      var geom;
+      if ( site.default_extent.spatialReference ) {
+        if ( site.default_extent.spatialReference.wkid === 4326 ) {
+          var xy = webMercatorUtils.lngLatToXY(x, y);
+          geom = {
+            x: xy[0],
+            y: xy[1],
+            type: 'point',
+            spatialReference: {
+              latestWkid: 3857,
+              wkid: 102100
+            }
           }
-        },
+        } else {
+          geom = {
+            x: x,
+            y: y,
+            type: 'point',
+            spatialReference: {
+              latestWkid: 3857,
+              wkid: 102100
+            }
+          }
+        }
+      } else {
+        if ( site.default_extent.spatial_reference.wkid === 4326 ) {
+          var xy = webMercatorUtils.lngLatToXY(x, y);
+          geom = {
+            x: xy[0],
+            y: xy[1],
+            type: 'point',
+            spatialReference: {
+              latestWkid: 3857,
+              wkid: 102100
+            }
+          }
+        } else {
+          geom = {
+            x: x,
+            y: y,
+            type: 'point',
+            spatialReference: {
+              latestWkid: 3857,
+              wkid: 102100
+            }
+          }
+        }
+      }
+      
+      feature = {
+        geometry: geom,
         attributes: {
           title: site.title,
           url: site.url,
@@ -185,6 +233,8 @@ require(["esri/map", "dojo/request", "esri/geometry/Circle", "esri/symbols/Simpl
       };
 
       add(feature);
+
+    //}
 
     });   
   });
@@ -227,7 +277,6 @@ require(["esri/map", "dojo/request", "esri/geometry/Circle", "esri/symbols/Simpl
   function removeSelectedFeature() {
     $.each(map.graphics.graphics, function(index,gra){
     if (gra) {
-      console.log('ra!', gra);
       if(gra.attributes && gra.attributes.id === "selectedFeature"){
         map.graphics.remove( gra );
       }
