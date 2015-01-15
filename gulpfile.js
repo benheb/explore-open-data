@@ -94,14 +94,14 @@ gulp.task('connect', function () {
         .use(connect.directory('app'));
 
     require('http').createServer(app)
-        .listen(9000)
+        .listen(8080)
         .on('listening', function () {
-            console.log('Started connect web server on http://localhost:9000');
+            console.log('Started connect web server on http://localhost:8080');
         });
 });
 
 gulp.task('serve', ['connect', 'styles'], function () {
-    require('opn')('http://localhost:9000');
+    require('opn')('http://localhost:8080');
 });
 
 // inject bower components
