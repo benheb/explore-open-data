@@ -1,9 +1,9 @@
 //MAP! 
 var map;
 require(["esri/map", "dojo/request", "esri/geometry/Circle", "esri/symbols/SimpleFillSymbol", 
-  "esri/graphic", "esri/layers/GraphicsLayer", "esri/Color", "esri/geometry/Point", "esri/SpatialReference", "esri/geometry/webMercatorUtils",
+  "esri/graphic", "esri/layers/GraphicsLayer", "esri/geometry/Point", "esri/SpatialReference", "esri/geometry/webMercatorUtils",
   "esri/layers/ArcGISTiledMapServiceLayer", "esri/layers/FeatureLayer", "dojo/domReady!"], function(Map, request, Circle, 
-    SimpleFillSymbol, Graphic, GraphicsLayer, Color, Point, SpatialReference, webMercatorUtils) { 
+    SimpleFillSymbol, Graphic, GraphicsLayer, Point, SpatialReference, webMercatorUtils) { 
 
   esriConfig.defaults.map.basemaps.dotted = {
     baseMapLayers: [
