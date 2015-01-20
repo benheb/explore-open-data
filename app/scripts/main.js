@@ -38,9 +38,14 @@ require(["esri/map", "dojo/request", "esri/geometry/Circle", "esri/symbols/Simpl
     gl.add(gra);
   }
 
-  gl.on('mouse-over', function(e) {
+  gl.on('mouse-over', function (e) {
     //featureSelected( e.graphic, 'mouse-over' );
+    showFeature(e.graphic, true);
     showHoverWindow(e);
+  });
+
+  gl.on('mouse-out', function (e) {
+    showFeature(e.graphic, false);
   });
 
   gl.on('click', function(e) {
@@ -126,6 +131,22 @@ require(["esri/map", "dojo/request", "esri/geometry/Circle", "esri/symbols/Simpl
 
     });   
   });
+
+  // Enhance symbol when mouse is over graphic
+  function showFeature(g, show) {
+    var s = g.symbol;
+    if (show) {
+      s.color.a = .75;
+      s.outline.width = 3; // 5 if you want more emphasis
+      s.outline.color.a = 1;
+      g.setSymbol(s);
+    } else {
+      s.color.a = 0.5;
+      s.outline.width = 1;
+      s.outline.color.a = .85;
+      g.setSymbol(s);
+    }
+  }
 
   function showHoverWindow(e) {
     var datasets = e.graphic.attributes.datasets;
