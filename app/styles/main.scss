@@ -58,3 +58,51 @@ circle {
   width:100%;
   height:100%;
 }
+
+
+
+
+
+
+
+
+/* FED CSS */
+body, html {
+  background:#2980b9;
+}
+
+#map img {
+  opacity: 0.3;
+}
+
+h1 {
+  text-transform: none;
+}
+
+#intro-container {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  height: 250px;
+  z-index: 300;
+}
+
+#intro-container-inner {
+  margin:auto;
+  background: rgba(255,255,255,0.4);
+  width:65%;
+  padding: 20px;
+  text-align: center;
+  color: #2c3e50;
+}
+
+.stat-container {}
+
+.stat-title {
+  font-size: 29pt;
+}
+
+.stat {
+  font-size: 39pt;
+  font-weight: 700;
+}

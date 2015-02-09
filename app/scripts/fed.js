@@ -44,7 +44,7 @@ require(["esri/map", "dojo/request", "esri/geometry/Circle", "esri/symbols/Simpl
   }
 
   map.on('zoom', function() {
-    $('#intro-container').fadeOut('slow');
+    //$('#intro-container').fadeOut('slow');
   });
 
   gl.on('mouse-over', function (e) {
@@ -66,7 +66,7 @@ require(["esri/map", "dojo/request", "esri/geometry/Circle", "esri/symbols/Simpl
   });
 
   //request("http://opendata.arcgis.com/explore.json").then(function(data){
-  request("/explore-020315.json").then(function(data){
+  request("data/explore-020315.json").then(function(data){
     // do something with handled data
     var sites = JSON.parse(data).sites, feature;
 
@@ -184,6 +184,7 @@ require(["esri/map", "dojo/request", "esri/geometry/Circle", "esri/symbols/Simpl
   }
 
   function showHoverWindow(e) {
+    /*
     if (!$('#intro-container').is(':visible')) {
       var datasets = e.graphic.attributes.datasets;
       var title = e.graphic.attributes.title;
@@ -192,6 +193,7 @@ require(["esri/map", "dojo/request", "esri/geometry/Circle", "esri/symbols/Simpl
       $('#groups').html('Open Data Groups: ' + groups);
       $('#count').html("Datasets: " + datasets);
     }
+    */
   }
 
   function onGraphicClick(e) {
