@@ -1,22 +1,20 @@
 //MAP! 
 var map;
-require(["esri/map", "dojo/request", "esri/geometry/Circle", "esri/symbols/SimpleFillSymbol", 
+require(["esri/map", "dojo/request", "esri/geometry/Circle", "esri/layers/ArcGISTiledMapServiceLayer", "esri/symbols/SimpleFillSymbol", 
   "esri/graphic", "esri/layers/GraphicsLayer", "esri/geometry/Point", "esri/SpatialReference", "esri/geometry/webMercatorUtils",
-  "esri/layers/ArcGISTiledMapServiceLayer", "esri/layers/FeatureLayer", "dojo/domReady!"], function(Map, request, Circle, 
-    SimpleFillSymbol, Graphic, GraphicsLayer, Point, SpatialReference, webMercatorUtils) { 
-
-  esriConfig.defaults.map.basemaps.dotted = {
-    baseMapLayers: [
-      { url: "http://studio.esri.com/arcgis/rest/services/World/WorldBasemapBlack/MapServer" }
-    ],
-    title: "dots"
-  };
+  "esri/layers/ArcGISTiledMapServiceLayer", "esri/layers/FeatureLayer", "dojo/domReady!"], 
+  function(Map, request, Circle, ArcGISTiledMapServiceLayer, SimpleFillSymbol, Graphic, GraphicsLayer, Point, SpatialReference, webMercatorUtils) { 
 
   map = new Map("map", {
-    center: [-56.049, 38.485],
+    center: [-50.049, 32.485],
     zoom: 3,
-    basemap: "dotted"
+    basemap: "satellite"
   });
+
+  //var customBasemap = new ArcGISTiledMapServiceLayer(
+  //  "http://studio.esri.com/arcgis/rest/services/World/WorldBasemapBlack/MapServer");
+  //map.addLayer(customBasemap);
+
   var gl = new GraphicsLayer({ id: "circles" });
   map.addLayer(gl);
 
@@ -31,7 +29,7 @@ require(["esri/map", "dojo/request", "esri/geometry/Circle", "esri/symbols/Simpl
       }, 
       "symbol":{"color":[237,50,133,128],
     "size":Math.min( Math.round( f.attributes.datasets_count / 100 * 40 ), 50), "angle":0,"xoffset":0,"yoffset":0,"type":"esriSMS",
-    "style":"esriSMSCircle","outline":{"color":[171,23,89,200],"width":1,
+    "style":"esriSMSCircle","outline":{"color":[210,210,210,170],"width":0.7,
     "type":"esriSLS","style":"esriSLSSolid"}}};
     
     var gra = new Graphic(point);
@@ -56,7 +54,8 @@ require(["esri/map", "dojo/request", "esri/geometry/Circle", "esri/symbols/Simpl
     //removeSelectedFeature( 'mouse-over' );
   });
 
-  request("http://opendata.arcgis.com/explore.json").then(function(data){
+  //request("http://opendata.arcgis.com/explore.json").then(function(data){
+  request("data/explore-032515.json").then(function(data){
     // do something with handled data
     var sites = JSON.parse(data).sites, feature;
 

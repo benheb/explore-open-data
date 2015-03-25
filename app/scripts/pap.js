@@ -5,17 +5,10 @@ require(["esri/map", "dojo/request", "esri/geometry/Circle", "esri/symbols/Simpl
   "esri/layers/ArcGISTiledMapServiceLayer", "esri/layers/FeatureLayer", "dojo/domReady!"], function(Map, request, Circle, SimpleFillSymbol, 
     Graphic, GraphicsLayer, Point, SpatialReference, webMercatorUtils) { 
 
-  esriConfig.defaults.map.basemaps.dotted = {
-    baseMapLayers: [
-      { url: "http://studio.esri.com/arcgis/rest/services/World/WorldBasemapBlack/MapServer" }
-    ],
-    title: "dots"
-  };
-
   map = new Map("map", {
     center: [-56.049, 38.485],
     zoom: 3,
-    basemap: "dotted"
+    basemap: "satellite"
   });
   
   var gl = new GraphicsLayer({ id: "circles" });
